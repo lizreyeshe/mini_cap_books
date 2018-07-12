@@ -15,11 +15,13 @@ ActiveRecord::Schema.define(version: 20180624183120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "book_categories", force: :cascade do |t|
-    t.integer  "book_id"
-    t.integer  "category_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "users", force: :cascade do |t|
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "name"
+    t.boolean  "admin",           default: false
   end
 
   create_table "books", force: :cascade do |t|
@@ -31,6 +33,28 @@ ActiveRecord::Schema.define(version: 20180624183120) do
     t.boolean  "stock"
     t.decimal  "price",       precision: 9, scale: 2
     t.integer  "supplier_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string   "image1"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "book_id"
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone_number"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "book_categories", force: :cascade do |t|
+    t.integer  "book_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "carted_products", force: :cascade do |t|
@@ -49,13 +73,6 @@ ActiveRecord::Schema.define(version: 20180624183120) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "images", force: :cascade do |t|
-    t.string   "image1"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "book_id"
-  end
-
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
     t.float    "subtotal"
@@ -63,23 +80,6 @@ ActiveRecord::Schema.define(version: 20180624183120) do
     t.float    "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "suppliers", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "phone_number"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string   "email"
-    t.string   "password_digest"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "name"
-    t.boolean  "admin",           default: false
   end
 
 end
